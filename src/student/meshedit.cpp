@@ -84,22 +84,22 @@ std::optional<Halfedge_Mesh::EdgeRef> Halfedge_Mesh::flip_edge(Halfedge_Mesh::Ed
     // get next next half edges
     auto he1 = e->halfedge();
     auto he2 = he1->twin();
-    auto origin1 = he1->next()->vertex();
-    auto origin2 = he2->next()->vertex();
     auto hn1 = he1->next();
     auto hn2 = he2->next();
-    auto dest1 = hn1->next()->vertex();
-    auto dest2 = hn2->next()->vertex();
+    auto origin1 = hn1->vertex();
+    auto origin2 = hn2->vertex();
     auto hnn1 = hn1->next();
     auto hnn2 = hn2->next();
+    auto dest1 = hnn1->vertex();
+    auto dest2 = hnn2->vertex();
     // search for half edge to origin1 => founde
-    auto backhn1 = hn1;
-    while (backhn1->vertex() != origin2) {
+    auto backhn1 = hnn1;
+    while(backhn1->next() != he1) {
         backhn1 = backhn1->next();
-	}
+    }
     // search for half edge to origin2
-    auto backhn2 = hn2;
-    while(backhn2->vertex() != origin1) {
+    auto backhn2 = hnn2;
+    while(backhn2->next() != he2) {
         backhn2 = backhn2->next();
     }
     
@@ -112,8 +112,8 @@ std::optional<Halfedge_Mesh::EdgeRef> Halfedge_Mesh::flip_edge(Halfedge_Mesh::Ed
     // set next next to twin
     // twin next to destination 2 next (twin next's next)
     // set twin next next to current half edge
-    he1->vertex() = dest1;
-    he2->vertex() = dest2;
+    he1->vertex() = dest2;
+    he2->vertex() = dest1;
     he1->next() = hnn1;
     he2->next() = hnn2;
     hn1->next() = he2;
@@ -128,8 +128,9 @@ std::optional<Halfedge_Mesh::EdgeRef> Halfedge_Mesh::flip_edge(Halfedge_Mesh::Ed
     he1->face()->halfedge() = he1;
     he2->face()->halfedge() = he2;
 
-    // set origin1/2 half edge to outgoing half edge 
-    
+    // ensure half edge points to face
+    hn1->face() = he2->face();
+    hn2->face() = he1->face();
     return std::optional<Halfedge_Mesh::EdgeRef>(e);
 }
 
