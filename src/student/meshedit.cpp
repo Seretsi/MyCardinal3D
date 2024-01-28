@@ -75,9 +75,63 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::collapse_face(Halfedge_Me
     flipped edge.
 */
 std::optional<Halfedge_Mesh::EdgeRef> Halfedge_Mesh::flip_edge(Halfedge_Mesh::EdgeRef e) {
+    // bail if is boundary edge
+    if(e->on_boundary()) return std::nullopt;
+    // get the origin verts
+    // get the destination verts
+    // get subject half edges
+    // get the next half edges
+    // get next next half edges
+    auto he1 = e->halfedge();
+    auto he2 = he1->twin();
+    auto hn1 = he1->next();
+    auto hn2 = he2->next();
+    auto origin1 = hn1->vertex();
+    auto origin2 = hn2->vertex();
+    auto hnn1 = hn1->next();
+    auto hnn2 = hn2->next();
+    auto dest1 = hnn1->vertex();
+    auto dest2 = hnn2->vertex();
+    // search for half edge to origin1 => founde
+    auto backhn1 = hnn1;
+    while(backhn1->next() != he1) {
+        backhn1 = backhn1->next();
+    }
+    // search for half edge to origin2
+    auto backhn2 = hnn2;
+    while(backhn2->next() != he2) {
+        backhn2 = backhn2->next();
+    }
+    
+    // begin CCW rotation
 
-    (void)e;
-    return std::nullopt;
+    // set current half edge to destination vertex
+    // set twin to destination vertex
+    // set current half edge next to destination next (next's next)
+    // set current half edge twin next to destination next (next's next)
+    // set next next to twin
+    // twin next to destination 2 next (twin next's next)
+    // set twin next next to current half edge
+    he1->vertex() = dest2;
+    he2->vertex() = dest1;
+    he1->next() = hnn1;
+    he2->next() = hnn2;
+    hn1->next() = he2;
+    hn2->next() = he1;
+
+    // set to founde twin to twin next
+    backhn1->next() = hn2;
+    // set to current half edge next
+    backhn2->next() = hn1;
+    // set face to know value
+    // set twin face to know value
+    he1->face()->halfedge() = he1;
+    he2->face()->halfedge() = he2;
+
+    // ensure half edge points to face
+    hn1->face() = he2->face();
+    hn2->face() = he1->face();
+    return std::optional<Halfedge_Mesh::EdgeRef>(e);
 }
 
 /*
