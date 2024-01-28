@@ -140,9 +140,9 @@ std::optional<Halfedge_Mesh::EdgeRef> Halfedge_Mesh::flip_edge(Halfedge_Mesh::Ed
     the edge that was split, rather than the new edges.
 */
 std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::split_edge(Halfedge_Mesh::EdgeRef e) {
+    Halfedge_Mesh::VertexRef midVert = new_vertex();
 
-    (void)e;
-    return std::nullopt;
+    return std::optional<Halfedge_Mesh::VertexRef>(midVert);
 }
 
 /* Note on the beveling process:
