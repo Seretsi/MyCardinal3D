@@ -88,27 +88,46 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::collapse_edge(Halfedge_Me
     // snap twins together 
     // get twin half edges of next half edges
     auto hn1 = he1->next();
+    auto hn1_edge = hn1->edge();
     auto hnn1 = hn1->next();
+    auto hnn1_edge = hnn1->edge();
     auto hn1_twin = hn1->twin();
     auto hnn1_twin = hnn1->twin();
     hn1_twin->twin() = hnn1_twin;
     hnn1_twin->twin() = hn1_twin;
+    hnn1_twin->edge() = hn1_edge;
+    hn1_edge->halfedge() = hn1_twin;
     // get twin half edges of next half edges
     auto hn2 = he2->next();
+    auto hn2_edge = hn2->edge();
     auto hnn2 = hn2->next();
+    auto hnn2_edge = hnn2->edge();
     auto hn2_twin = hn2->twin();
     auto hnn2_twin = hnn2->twin();
     hn2_twin->twin() = hnn2_twin;
     hnn2_twin->twin() = hn2_twin;
-	// clean up old elements
-    erase(e);
-    erase(he1->face());
-    erase(he2->face());
-    erase(he1);
-    erase(he2);
-    erase(v1);
-    erase(v2);
+    hnn2_twin->edge() = hn2_edge;
+    hn2_edge->halfedge() = hn2_twin;
 
+	// clean up old elements
+    {
+        erase(e);
+        erase(hnn1_edge);
+        erase(hnn2_edge);
+        erase(he1->face());
+        erase(he2->face());
+        erase(hn1);
+        erase(hnn1);
+        erase(hn2);
+        erase(hnn2);
+        erase(he1);
+        erase(he2);
+        erase(v1);
+        erase(v2);
+    }
+    hn1_twin->vertex()->halfedge() = hn1_twin;
+    hn2_twin->vertex()->halfedge() = hn2_twin;
+    newVert->halfedge() = hnn1_twin;
     return std::optional<Halfedge_Mesh::VertexRef>(newVert);
 }
 
