@@ -140,6 +140,25 @@ std::optional<Halfedge_Mesh::EdgeRef> Halfedge_Mesh::flip_edge(Halfedge_Mesh::Ed
     the edge that was split, rather than the new edges.
 */
 std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::split_edge(Halfedge_Mesh::EdgeRef e) {
+    // get the original elements
+    auto he1 = e->halfedge();
+    auto he2 = he1->twin();
+    if(he1->is_boundary() || he2->is_boundary()) {
+        printf("Boundary edges found\n");
+        return std::nullopt;
+	}
+
+    auto hn1 = he1->next();
+    auto hn2 = he2->next();
+    auto hnn1 = hn1->next();
+    auto hnn2 = hn2->next();
+    auto A = he2->vertex();
+    auto B = he1->vertex();
+    auto C = hnn1->vertex();
+    auto D = hnn2->vertex();
+    auto oldFace = he1->face();
+    auto oldFace2 = he2->face();
+
     // setup new variables
     Halfedge_Mesh::VertexRef midVert = new_vertex();
     auto edgeA = new_edge();
@@ -156,35 +175,17 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::split_edge(Halfedge_Mesh:
     auto nface2 = new_face();
     auto nface3 = new_face();
     auto nface4 = new_face();
-    // get the original elements
-    auto he1 = e->halfedge();
-    auto he2 = he1->twin();
-    auto hn1 = he1->next();
-    auto hn2 = he2->next();
-    auto hnn1 = hn1->next();
-    auto hnn2 = hn2->next();
-    auto A = he2->vertex();
-    auto B = he1->vertex();
-    auto C = hnn1->vertex();
-    auto D = hnn2->vertex();
-    auto oldFace = he1->face();
-    auto oldFace2 = he2->face();
 
     // assign new values
+    midVert->new_pos = e->center();
     midVert->halfedge() = nhn1;
 
     edgeA->halfedge() = he2;
     edgeB->halfedge() = he1;
     edgeC->halfedge() = nhn2;
     edgeD->halfedge() = nhn1;
-    /*edgeA->new_pos = edgeA->center();
-    edgeB->new_pos = edgeB->center();
-    edgeC->new_pos = edgeC->center();
-    edgeD->new_pos = edgeD->center();*/
-    //edgeA->is_new = true;
     // init faces
     nface1->halfedge() = he2;
-    //nface1->new_pos = ;
     nface2->halfedge() = nhe2;
     nface3->halfedge() = he1;
     nface4->halfedge() = nhe4;
@@ -262,8 +263,6 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::split_edge(Halfedge_Mesh:
      	hn2->vertex() = B;
      	hn2->face() = nface4;
     }
-
-    midVert->new_pos = e->center(); //*0.5 + A->pos * 0.25 + B->pos * 0.25;
 
     // delete unused elements
     erase(e);
