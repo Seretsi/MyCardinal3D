@@ -55,9 +55,61 @@ std::optional<Halfedge_Mesh::FaceRef> Halfedge_Mesh::erase_edge(Halfedge_Mesh::E
     the new vertex created by the collapse.
 */
 std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::collapse_edge(Halfedge_Mesh::EdgeRef e) {
+    // bail if last edge
+    if(edges.size() < 2) {
+        printf("Not enough edges\n");
+        return std::nullopt;
+    }
+    // gather edge members
+    auto he1 = e->halfedge();
+    auto he2 = he1->twin();
+    auto v1 = he1->vertex();
+    auto v2 = he2->vertex();
+    // create new vertex
+    auto newVert = new_vertex();
+    // set new vertex location to edge center
+    newVert->new_pos = e->center();
+    // iterate around vertices
+    auto he = he1;
+    he = he->next()->next()->twin();
+    while(he != he1) {
+        // set half edges to new vertex
+        he->vertex() = newVert;
+		he = he->next()->next()->twin();
+    }
+    // iterate around vertices
+    he = he2;
+    he = he->next()->next()->twin();
+    while (he != he2) {
+        // set half edges to new vertex
+		he->vertex() = newVert;
+        he = he->next()->next()->twin();
+    }
+    // snap twins together 
+    // get twin half edges of next half edges
+    auto hn1 = he1->next();
+    auto hnn1 = hn1->next();
+    auto hn1_twin = hn1->twin();
+    auto hnn1_twin = hnn1->twin();
+    hn1_twin->twin() = hnn1_twin;
+    hnn1_twin->twin() = hn1_twin;
+    // get twin half edges of next half edges
+    auto hn2 = he2->next();
+    auto hnn2 = hn2->next();
+    auto hn2_twin = hn2->twin();
+    auto hnn2_twin = hnn2->twin();
+    hn2_twin->twin() = hnn2_twin;
+    hnn2_twin->twin() = hn2_twin;
+	// clean up old elements
+    erase(e);
+    erase(he1->face());
+    erase(he2->face());
+    erase(he1);
+    erase(he2);
+    erase(v1);
+    erase(v2);
 
-    (void)e;
-    return std::nullopt;
+    return std::optional<Halfedge_Mesh::VertexRef>(newVert);
 }
 
 /*
