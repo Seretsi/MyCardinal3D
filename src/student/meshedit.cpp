@@ -68,66 +68,98 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::collapse_edge(Halfedge_Me
     // create new vertex
     auto newVert = new_vertex();
     // set new vertex location to edge center
-    newVert->new_pos = e->center();
-    // iterate around vertices
+    newVert->pos = e->center();
+    newVert->halfedge() = he1->next();
+    // [1] iterate around vertices
     auto he = he1;
-    he = he->next()->next()->twin();
+    // walk face to find half edge behind the collapsing edge
+    //he = he->next()->next()->twin();
+    while (he->next() != he1) {
+		he = he->next();
+	}
+    auto hnn1 = he; // store for later
+    // walk round vertex to set new vertex
+    he = he->twin();
     while(he != he1) {
         // set half edges to new vertex
         he->vertex() = newVert;
-		he = he->next()->next()->twin();
+        auto end = he;
+		//he = he->next()->next()->twin();
+        while(he->next() != end) {
+        	he = he->next();
+        }
+        he = he->twin();
     }
-    // iterate around vertices
+    // repeat [1]
     he = he2;
-    he = he->next()->next()->twin();
+    //he = he->next()->next()->twin();
+    while(he->next() != he2) {
+    		he = he->next();
+    }
+    auto hnn2 = he; // store for later
+    he = he->twin();
     while (he != he2) {
-        // set half edges to new vertex
-		he->vertex() = newVert;
-        he = he->next()->next()->twin();
+        he->vertex() = newVert;
+        auto end = he;
+        // he = he->next()->next()->twin();
+        while(he->next() != end) {
+            he = he->next();
+        }
+        he = he->twin();
     }
     // snap twins together 
     // get twin half edges of next half edges
-    auto hn1 = he1->next();
-    auto hn1_edge = hn1->edge();
-    auto hnn1 = hn1->next();
-    auto hnn1_edge = hnn1->edge();
-    auto hn1_twin = hn1->twin();
-    auto hnn1_twin = hnn1->twin();
-    hn1_twin->twin() = hnn1_twin;
-    hnn1_twin->twin() = hn1_twin;
-    hnn1_twin->edge() = hn1_edge;
-    hn1_edge->halfedge() = hn1_twin;
-    // get twin half edges of next half edges
-    auto hn2 = he2->next();
-    auto hn2_edge = hn2->edge();
-    auto hnn2 = hn2->next();
-    auto hnn2_edge = hnn2->edge();
-    auto hn2_twin = hn2->twin();
-    auto hnn2_twin = hnn2->twin();
-    hn2_twin->twin() = hnn2_twin;
-    hnn2_twin->twin() = hn2_twin;
-    hnn2_twin->edge() = hn2_edge;
-    hn2_edge->halfedge() = hn2_twin;
+    if(he1->face()->degree() == 3) {
+        auto hn1 = he1->next();
+        auto hn1_edge = hn1->edge();
+        // auto hnn1 = hn1->next();
+        auto hnn1_edge = hnn1->edge();
+        auto hn1_twin = hn1->twin();
+        auto hnn1_twin = hnn1->twin();
+        hn1_twin->twin() = hnn1_twin;
+        hnn1_twin->twin() = hn1_twin;
+        hnn1_twin->edge() = hn1_edge;
+        hn1_edge->halfedge() = hn1_twin;
+		erase(he1->face());
+        erase(hnn1_edge);
+        erase(hn1);
+        erase(hnn1);
+        hn1_twin->vertex()->halfedge() = hn1_twin;
+        newVert->halfedge() = hnn1_twin;
+    } else {
+        hnn1->next() = he1->next();
+		hnn1->face()->halfedge() = hnn1;
+    }
 
+    // get twin half edges of next half edges
+    if (he2->face()->degree() == 3) {
+		auto hn2 = he2->next();
+		auto hn2_edge = hn2->edge();
+		// auto hnn2 = hn2->next();
+		auto hnn2_edge = hnn2->edge();
+		auto hn2_twin = hn2->twin();
+		auto hnn2_twin = hnn2->twin();
+		hn2_twin->twin() = hnn2_twin;
+		hnn2_twin->twin() = hn2_twin;
+		hnn2_twin->edge() = hn2_edge;
+		hn2_edge->halfedge() = hn2_twin;
+        erase(hnn2_edge);
+        erase(hn2);
+        erase(hnn2);
+        erase(he2->face());
+        hn2_twin->vertex()->halfedge() = hn2_twin;
+    } else {
+        hnn2->next() = he2->next();
+        hnn2->face()->halfedge() = hnn2;
+    }
 	// clean up old elements
     {
         erase(e);
-        erase(hnn1_edge);
-        erase(hnn2_edge);
-        erase(he1->face());
-        erase(he2->face());
-        erase(hn1);
-        erase(hnn1);
-        erase(hn2);
-        erase(hnn2);
         erase(he1);
         erase(he2);
         erase(v1);
         erase(v2);
     }
-    hn1_twin->vertex()->halfedge() = hn1_twin;
-    hn2_twin->vertex()->halfedge() = hn2_twin;
-    newVert->halfedge() = hnn1_twin;
     return std::optional<Halfedge_Mesh::VertexRef>(newVert);
 }
 
@@ -248,7 +280,7 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::split_edge(Halfedge_Mesh:
     auto nface4 = new_face();
 
     // assign new values
-    midVert->new_pos = e->center();
+    midVert->pos = e->center();
     midVert->halfedge() = nhn1;
 
     edgeA->halfedge() = he2;
