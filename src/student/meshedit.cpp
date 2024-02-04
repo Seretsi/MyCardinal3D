@@ -692,6 +692,28 @@ void Halfedge_Mesh::linear_subdivide_positions() {
     // For each face, assign the centroid (i.e., arithmetic mean)
     // of the original vertex positions to Face::new_pos. Note
     // that in general, NOT all faces will be triangles!
+
+    // for each face in mesh
+        // create midVert
+        // compute centroid
+        // get old hes
+        // for each he
+            // get hn, hnn
+
+            // create 2 mid verts
+            // set vert to edge midpoints pos
+            // create new 2x edges
+            // set new edge locations
+            // set new edge values except half edges
+            // create new face
+            // set new face centroid
+            // temp he
+            // increment he
+            // delete temp he
+            //
+        // temp face
+        // delete temp face
+        // increment face
 }
 
 /*
