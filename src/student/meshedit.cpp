@@ -558,8 +558,71 @@ void Halfedge_Mesh::bevel_face_positions(const std::vector<Vec3>& start_position
     Splits all non-triangular faces into triangles.
 */
 void Halfedge_Mesh::triangulate() {
+    // iterate over faces
+    std::vector<Halfedge_Mesh::FaceRef> notTris;
+    for (auto f = faces_begin(); f != faces_end(); f++) {
+        if (f->degree() != 3) {
+			notTris.push_back(f);
+		}
+	}
+    for(auto face : notTris) {
+        auto he = face->halfedge();
+            // while curr degree not 3
+        while(he->face()->degree() != 3) {
+            auto temp_face = he->face();
+            if(temp_face->degree() == 3)
+                printf("here\n");
+            // create 2 face and edge
+            // if face is not a triangle split
+            // find home vertex
+            auto hn = he->next();
+            auto hnn = hn->next();
+            // create new edge
+            auto newEdge = new_edge();
+            // create its half edges
+            auto newHe = new_halfedge();
+            newHe->vertex() = hnn->vertex();
+            newHe->next() = he;
+            auto newHeTwin = new_halfedge();
+            newHeTwin->vertex() = he->vertex();
+            newHeTwin->next() = hnn;
+            newHe->twin() = newHeTwin;
+            newHeTwin->twin() = newHe;
+            newHe->edge() = newEdge;
+            newHeTwin->edge() = newEdge;
+            newEdge->halfedge() = newHe;
 
-    // For each face...
+            auto new_face1 = new_face();
+            auto new_face2 = new_face();
+
+            // reassign half edges
+            hn->next() = newHe;
+            auto temp2 = hnn;
+            while (temp2->next() != he) {
+				temp2 = temp2->next();
+			}
+            temp2->next() = newHeTwin;
+
+            auto temp = he;
+            new_face1->halfedge() = he;
+            do {
+			    temp->face() = new_face1;
+			    temp = temp->next();
+		    } while(temp != he);
+            temp = newHeTwin;
+            new_face2->halfedge() = newHeTwin;
+            do {
+                temp->face() = new_face2;
+                temp = temp->next();
+            } while(temp != newHeTwin);
+            if(temp_face->id() == 33) {
+				printf("here\n");
+            }
+            erase(temp_face);
+            he = newHeTwin;
+		}
+
+    }
 }
 
 /* Note on the quad subdivision process:
