@@ -558,8 +558,61 @@ void Halfedge_Mesh::bevel_face_positions(const std::vector<Vec3>& start_position
     Splits all non-triangular faces into triangles.
 */
 void Halfedge_Mesh::triangulate() {
+    auto f = faces_begin();
+    // iterate over faces
+    std::vector<Halfedge_Mesh::FaceRef> notTris;
+    for (auto f = faces_begin(); f != faces_end(); f++) {
+        if (f->degree() != 3) {
+			notTris.push_back(f);
+		}
+	}
+    for(auto face : notTris) {
+        // if face is not a triangle split
+        // find home vertex
+        auto he = face->halfedge();
+        auto hn = he->next();
+        auto hnn = hn->next();
+        // create new edge
+        auto newEdge = new_edge();
+        // create its half edges
+        auto newHe = new_halfedge();
+        newHe->vertex() = hnn->vertex();
+        newHe->next() = he;
+        auto newHeTwin = new_halfedge();
+        newHeTwin->vertex() = he->vertex();
+        newHeTwin->next() = hnn;
+        newHe->twin() = newHeTwin;
+        newHeTwin->twin() = newHe;
+        newHe->edge() = newEdge;
+        newHeTwin->edge() = newEdge;
+        newEdge->halfedge() = newHe;
 
-    // For each face...
+        auto new_face1 = new_face();
+        auto new_face2 = new_face();
+
+        // reassign half edges
+        hn->next() = newHe;
+        hnn->next()->next() = newHeTwin;
+        auto temp = he;
+        new_face1->halfedge() = he;
+        do {
+			temp->face() = new_face1;
+			temp = temp->next();
+		} while(temp != he);
+        temp = newHeTwin;
+        new_face2->halfedge() = newHeTwin;
+        do {
+            temp->face() = new_face2;
+            temp = temp->next();
+        } while(temp != newHeTwin);
+        // iterate over half edges
+            // complete set of triangle verts
+            // create a new face
+            // reassign half edges
+        // delete original face
+        // For each face...
+        erase(face);
+    }
 }
 
 /* Note on the quad subdivision process:
