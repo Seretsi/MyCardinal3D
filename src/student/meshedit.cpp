@@ -685,35 +685,63 @@ void Halfedge_Mesh::linear_subdivide_positions() {
 
     // For each vertex, assign Vertex::new_pos to
     // its original position, Vertex::pos.
-
     // For each edge, assign the midpoint of the two original
     // positions to Edge::new_pos.
-
     // For each face, assign the centroid (i.e., arithmetic mean)
     // of the original vertex positions to Face::new_pos. Note
     // that in general, NOT all faces will be triangles!
 
     // for each face in mesh
+    for(auto face = faces_begin(); face != faces_end(); face++) {
         // create midVert
+        VertexRef midVert = new_vertex();
         // compute centroid
+        midVert->new_pos = face->center();
         // get old hes
+        HalfedgeRef he = face->halfedge();
         // for each he
+        EdgeRef leftEdge = edges_end();
+        VertexRef leftVert = vertices_end();
+        do {
             // get hn, hnn
-
+            HalfedgeRef hn = he->next();
+            HalfedgeRef hnn = hn->next();
             // create 2 mid verts
+            leftVert = leftVert == vertices_end() ? new_vertex() : leftVert;
+            VertexRef rightVert = new_vertex();
             // set vert to edge midpoints pos
-            // create new 2x edges
+            leftVert->new_pos = (he->vertex()->pos * 0.5 + hn->vertex()->pos * 0.5);
+            rightVert->new_pos = (hn->vertex()->pos*0.5 + hnn->vertex()->pos*0.5);
+            // create new 4x edges
+            leftEdge = leftEdge == edges_end() ? new_edge() : leftEdge;
+            EdgeRef rightEdge = new_edge();
             // set new edge locations
+            leftEdge->new_pos = leftVert->new_pos * 0.5 + midVert->new_pos*0.5;
+            rightEdge->new_pos = rightVert->new_pos * 0.5 + midVert->new_pos*0.5;
+            EdgeRef edge1 = new_edge();
+            EdgeRef edge2 = new_edge();
             // set new edge values except half edges
+            edge1->new_pos = leftVert->new_pos * 0.5 + hn->vertex()->new_pos * 0.5;
+            edge2->new_pos = rightVert->new_pos * 0.5 + hn->vertex()->new_pos * 0.5;
             // create new face
+            FaceRef newFace = new_face();
             // set new face centroid
+            newFace->new_pos = (leftVert->new_pos + rightVert->new_pos + midVert->new_pos + hn->vertex()->new_pos) * 0.25;
+            // newFace->boundary = hn->is_boundary();
+            leftEdge = rightEdge;
+            leftVert = rightVert;
+            he = hn;
+        } while(he != face->halfedge());
+
             // temp he
             // increment he
             // delete temp he
+            // delete he edge
             //
         // temp face
         // delete temp face
         // increment face
+    }
 }
 
 /*
