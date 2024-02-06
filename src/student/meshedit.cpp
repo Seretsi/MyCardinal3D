@@ -844,6 +844,13 @@ struct Edge_Record {
         //    Edge_Record::optimal.
         // -> Also store the cost associated with collapsing this edge in
         //    Edge_Record::cost.
+        auto quad1 = vertex_quadrics[e->halfedge()->vertex()];
+        auto quad2 = vertex_quadrics[e->halfedge()->twin()->vertex()];
+        auto Q = quad1 + quad2;
+        Vec3 b = -Vec3(Q[4][1], Q[4][2], Q[4][3]);
+        optimal = Q.inverse() * b;
+        // cost is optimal transpose * Q * optimal
+        cost = dot(optimal, Q * optimal);
     }
     Halfedge_Mesh::EdgeRef edge;
     Vec3 optimal;
