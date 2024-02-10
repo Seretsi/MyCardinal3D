@@ -233,6 +233,12 @@ std::optional<Halfedge_Mesh::EdgeRef> Halfedge_Mesh::flip_edge(Halfedge_Mesh::Ed
     // ensure half edge points to face
     hn1->face() = he2->face();
     hn2->face() = he1->face();
+
+    // ensure vertex points to half edge
+    dest1->halfedge() = he2;
+    dest2->halfedge() = he1;
+    origin1->halfedge() = hn1;
+    origin2->halfedge() = hn2;
     return std::optional<Halfedge_Mesh::EdgeRef>(e);
 }
 
