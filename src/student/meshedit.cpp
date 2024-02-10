@@ -74,10 +74,8 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::collapse_edge(Halfedge_Me
     auto he = he1;
     // walk face to find half edge behind the collapsing edge
     //he = he->next()->next()->twin();
-    printf("Vert id: %d\n", he->vertex()->id());
     while(he->next() != he1) {
         // print edge id
-        printf("Edge id: %d\n", he->edge()->id());
 		he = he->next();
 	}
     auto hnn1 = he; // store for later
@@ -95,9 +93,7 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::collapse_edge(Halfedge_Me
     }
     // repeat [1]
     he = he2;
-    printf("Vert id: %d\n", he->vertex()->id());
     while(he->next() != he2) {
-        printf("Edge id: %d\n", he->edge()->id());
         he = he->next();
     }
     auto hnn2 = he; // store for later
@@ -1007,18 +1003,14 @@ bool Halfedge_Mesh::simplify() {
         vertex_quadrics.erase(v1);
         vertex_quadrics.erase(v2);
         auto he = v1->halfedge();
-        printf("In Simp: Vert id: %d\n", v1->id());
         do {
-            printf("Edge id: %d\n", he->edge()->id());
             edge_queue.remove(edge_records[he->edge()]);
             edge_records.erase(he->edge());
             he = he->twin()->next();
 		} while (he != v1->halfedge());
         he = v2->halfedge();
-        printf("In Simp Vert id: %d\n", v2->id());
         do {
             auto temp = he->edge();
-            printf("Edge id: %d\n", temp->id());
             auto er = edge_records[temp];
             edge_queue.remove(er);
             edge_records.erase(temp);
