@@ -74,7 +74,8 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::collapse_edge(Halfedge_Me
     auto he = he1;
     // walk face to find half edge behind the collapsing edge
     //he = he->next()->next()->twin();
-    while (he->next() != he1) {
+    while(he->next() != he1) {
+        // print edge id
 		he = he->next();
 	}
     auto hnn1 = he; // store for later
@@ -92,16 +93,14 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::collapse_edge(Halfedge_Me
     }
     // repeat [1]
     he = he2;
-    //he = he->next()->next()->twin();
     while(he->next() != he2) {
-    		he = he->next();
+        he = he->next();
     }
     auto hnn2 = he; // store for later
     he = he->twin();
     while (he != he2) {
         he->vertex() = newVert;
         auto end = he;
-        // he = he->next()->next()->twin();
         while(he->next() != end) {
             he = he->next();
         }
@@ -690,20 +689,17 @@ void Halfedge_Mesh::linear_subdivide_positions() {
     // For each face, assign the centroid (i.e., arithmetic mean)
     // of the original vertex positions to Face::new_pos. Note
     // that in general, NOT all faces will be triangles!
-    
-    for (auto f = faces_begin(); f != faces_end(); f++)
-    {
-		f->new_pos = f->center();
-        HalfedgeRef he = f->halfedge();
-        while (he->next() != f->halfedge())
-        {
-			he->edge()->new_pos = he->edge()->center();
-            he->vertex()->new_pos = he->vertex()->pos;
-			he = he->next();
-        }
+
+    for(auto v = vertices_begin(); v != vertices_end(); v++) {
+        v->new_pos = v->pos;
+    }
+    for(auto e = edges_begin(); e != edges_end(); e++) {
+        e->new_pos = e->center();
+    }
+    for(auto f = faces_begin(); f != faces_end(); f++) {
+        f->new_pos = f->center();
     }
 }
-
 /*
     Compute new vertex positions for a mesh that splits each polygon
     into quads (by inserting a vertex at the face midpoint and each
@@ -844,6 +840,14 @@ struct Edge_Record {
         //    Edge_Record::optimal.
         // -> Also store the cost associated with collapsing this edge in
         //    Edge_Record::cost.
+        auto blah = e->halfedge()->vertex();
+        Mat4 quad1 = vertex_quadrics[blah];
+        Mat4 quad2 = vertex_quadrics[e->halfedge()->twin()->vertex()];
+        Mat4 Q = quad1 + quad2;
+        Vec3 b = -Vec3(Q[3][0], Q[3][1], Q[3][2]);
+        optimal = Q.inverse() * b;
+        // cost is optimal transpose * Q * optimal
+        cost = dot(optimal, Q * optimal);
     }
     Halfedge_Mesh::EdgeRef edge;
     Vec3 optimal;
@@ -943,12 +947,13 @@ template<class T> struct PQueue {
     further without destroying it.)
 */
 bool Halfedge_Mesh::simplify() {
-
+    if (edges.size() < 3) {
+		return false;
+	}
     std::unordered_map<VertexRef, Mat4> vertex_quadrics;
     std::unordered_map<FaceRef, Mat4> face_quadrics;
     std::unordered_map<EdgeRef, Edge_Record> edge_records;
     PQueue<Edge_Record> edge_queue;
-
     // Compute initial quadrics for each face by simply writing the plane equation
     // for the face in homogeneous coordinates. These quadrics should be stored
     // in face_quadrics
@@ -963,7 +968,66 @@ bool Halfedge_Mesh::simplify() {
     //    the collapsed vertex AFTER it's been collapsed. Also remember to assign
     //    a quadric to the collapsed vertex, and to pop the collapsed edge off the
     //    top of the queue.
+    for (auto f = faces_begin(); f != faces_end(); f++)
+    {
+		Vec3 normal = f->normal();
+		Vec3 point = f->halfedge()->vertex()->pos;
+		float d = -dot(normal, point);
+		Mat4 quadric = outer(Vec4(point, 1.0f), Vec4(normal, d));
+		face_quadrics[f] = quadric;
+	}
+    for (auto v = vertices_begin(); v != vertices_end(); v++)
+    {
+        Mat4 quadric = Mat4();
+        auto he = v->halfedge();
+        do {
+            quadric += face_quadrics[he->face()];
+			he = he->twin()->next();
+		} while (he != v->halfedge());
+        vertex_quadrics[v] = quadric;
+    }
+    for (auto e = edges_begin(); e != edges_end(); e++)
+    {
+		edge_records[e] = Edge_Record(vertex_quadrics, e);
+        edge_queue.insert(Edge_Record(vertex_quadrics, e));
+	}
+    int target = edges.size() * 0.75;
+    while(edges.size() > target)
+	{
+        Edge_Record best = edge_queue.top();
+        edge_queue.pop();
+        auto e = best.edge;
+        auto v1 = e->halfedge()->vertex();
+        auto v2 = e->halfedge()->twin()->vertex();
+        Mat4 Q = vertex_quadrics[v1] + vertex_quadrics[v2];
+        vertex_quadrics.erase(v1);
+        vertex_quadrics.erase(v2);
+        auto he = v1->halfedge();
+        do {
+            edge_queue.remove(edge_records[he->edge()]);
+            edge_records.erase(he->edge());
+            he = he->twin()->next();
+		} while (he != v1->halfedge());
+        he = v2->halfedge();
+        do {
+            auto temp = he->edge();
+            auto er = edge_records[temp];
+            edge_queue.remove(er);
+            edge_records.erase(temp);
+            he = he->twin()->next();
+        } while (he != v2->halfedge());
 
+        auto newVert = collapse_edge_erase(e);
+        
+        vertex_quadrics[newVert.value()] = Q;
+        he = newVert.value()->halfedge();
+        do {
+            auto er = Edge_Record(vertex_quadrics, he->edge());
+			edge_records[he->edge()] = er;
+			edge_queue.insert(edge_records[he->edge()]);
+			he = he->twin()->next();
+		} while (he != newVert.value()->halfedge());
+    }
     // Note: if you erase elements in a local operation, they will not be actually deleted
     // until do_erase or validate are called. This is to facilitate checking
     // for dangling references to elements that will be erased.
@@ -971,5 +1035,5 @@ bool Halfedge_Mesh::simplify() {
     // but here simply calling collapse_edge() will not erase the elements.
     // You should use collapse_edge_erase() instead for the desired behavior.
 
-    return false;
+    return true;
 }
