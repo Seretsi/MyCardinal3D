@@ -75,43 +75,33 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::collapse_edge(Halfedge_Me
     // walk face to find half edge behind the collapsing edge
     //he = he->next()->next()->twin();
     while(he->next() != he1) {
-        // print edge id
 		he = he->next();
 	}
     auto hnn1 = he; // store for later
     // walk round vertex to set new vertex
-    he = he->twin();
-    while(he != he1) {
-        // set half edges to new vertex
-        he->vertex() = newVert;
-        auto end = he;
-		//he = he->next()->next()->twin();
-        while(he->next() != end) {
-        	he = he->next();
-        }
-        he = he->twin();
-    }
+    he = he1->twin()->next();
+    do {
+    	// set half edges to new vertex
+		he->vertex() = newVert;
+		he = he->twin()->next();
+    } while(he != he1);
     // repeat [1]
     he = he2;
     while(he->next() != he2) {
         he = he->next();
     }
     auto hnn2 = he; // store for later
-    he = he->twin();
-    while (he != he2) {
+    he = he2->twin()->next();
+    do {
+        // set half edges to new vertex
         he->vertex() = newVert;
-        auto end = he;
-        while(he->next() != end) {
-            he = he->next();
-        }
-        he = he->twin();
-    }
+        he = he->twin()->next();
+    } while(he != he2);
     // snap twins together 
     // get twin half edges of next half edges
     if(he1->face()->degree() == 3) {
         auto hn1 = he1->next();
         auto hn1_edge = hn1->edge();
-        // auto hnn1 = hn1->next();
         auto hnn1_edge = hnn1->edge();
         auto hn1_twin = hn1->twin();
         auto hnn1_twin = hnn1->twin();
@@ -134,7 +124,6 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::collapse_edge(Halfedge_Me
     if (he2->face()->degree() == 3) {
 		auto hn2 = he2->next();
 		auto hn2_edge = hn2->edge();
-		// auto hnn2 = hn2->next();
 		auto hnn2_edge = hnn2->edge();
 		auto hn2_twin = hn2->twin();
 		auto hnn2_twin = hnn2->twin();
@@ -977,9 +966,9 @@ bool Halfedge_Mesh::simplify() {
     for (auto f = faces_begin(); f != faces_end(); f++)
     {
 		Vec3 normal = f->normal();
-		Vec3 point = f->halfedge()->vertex()->pos;
+		Vec3 point = f->center();
 		float d = -dot(normal, point);
-		Mat4 quadric = outer(Vec4(point, 1.0f), Vec4(normal, d));
+        Mat4 quadric = outer(Vec4(normal, d), Vec4(normal, d));
 		face_quadrics[f] = quadric;
 	}
     for (auto v = vertices_begin(); v != vertices_end(); v++)
@@ -995,14 +984,17 @@ bool Halfedge_Mesh::simplify() {
     for (auto e = edges_begin(); e != edges_end(); e++)
     {
 		edge_records[e] = Edge_Record(vertex_quadrics, e);
-        edge_queue.insert(Edge_Record(vertex_quadrics, e));
+        edge_queue.insert(edge_records[e]);
 	}
-    int target = edges.size() * 0.75;
+
+    int i = 0;
+    int target = edges.size() * 0.25;
     while(edges.size() > target)
 	{
         Edge_Record best = edge_queue.top();
         edge_queue.pop();
         auto e = best.edge;
+        Vec3 optimal = best.optimal;
         auto v1 = e->halfedge()->vertex();
         auto v2 = e->halfedge()->twin()->vertex();
         Mat4 Q = vertex_quadrics[v1] + vertex_quadrics[v2];
@@ -1022,17 +1014,23 @@ bool Halfedge_Mesh::simplify() {
             edge_records.erase(temp);
             he = he->twin()->next();
         } while (he != v2->halfedge());
+        //validate();
+        i++;
+        if(i == 16) 
+            i = i;
+        auto newVert = collapse_edge_erase(e).value();
+        //newVert->pos = optimal;
+        // todo: null value handling
 
-        auto newVert = collapse_edge_erase(e);
-        
-        vertex_quadrics[newVert.value()] = Q;
-        he = newVert.value()->halfedge();
+        vertex_quadrics[newVert] = Q;
+        he = newVert->halfedge();
+        //validate();
         do {
             auto er = Edge_Record(vertex_quadrics, he->edge());
 			edge_records[he->edge()] = er;
 			edge_queue.insert(edge_records[he->edge()]);
 			he = he->twin()->next();
-		} while (he != newVert.value()->halfedge());
+		} while (he != newVert->halfedge());
     }
     // Note: if you erase elements in a local operation, they will not be actually deleted
     // until do_erase or validate are called. This is to facilitate checking
@@ -1040,6 +1038,5 @@ bool Halfedge_Mesh::simplify() {
     // The rest of the codebase will automatically call validate() after each op,
     // but here simply calling collapse_edge() will not erase the elements.
     // You should use collapse_edge_erase() instead for the desired behavior.
-
     return true;
 }
