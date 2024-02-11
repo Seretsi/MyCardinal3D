@@ -275,7 +275,7 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::split_edge(Halfedge_Mesh:
 
     // assign new values
     midVert->pos = e->center();
-    midVert->halfedge() = nhn1;
+    midVert->halfedge() = nhe2; // nhn1;
 
     edgeA->halfedge() = he2;
     edgeB->halfedge() = he1;
@@ -758,7 +758,7 @@ void Halfedge_Mesh::loop_subdivide() {
     // -> Next, we're going to split every edge in the mesh, in any order.  For
     //    future reference, we're also going to store some information about which
     //    subdivided edges come from splitting an edge in the original mesh, and
-    //    which edges are new, by setting the flat Edge::is_new. Note that in this
+    //    which edges are new, by setting the flag Edge::is_new. Note that in this
     //    loop, we only want to iterate over edges of the original mesh.
     //    Otherwise, we'll end up splitting edges that we just split (and the
     //    loop will never end!)
@@ -791,6 +791,8 @@ void Halfedge_Mesh::loop_subdivide() {
     // Finally, flip any new edge that connects an old and new vertex.
 
     // Copy the updated vertex positions to the subdivided mesh.
+
+
 }
 
 /*
