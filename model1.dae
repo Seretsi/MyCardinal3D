@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Assimp</author>
+      <authoring_tool>Assimp Exporter</authoring_tool>
+    </contributor>
+    <created>2024-02-11T09:41:56</created>
+    <modified>2024-02-11T09:41:56</modified>
+    <unit name="meter" meter="1" />
+    <up_axis>Y_UP</up_axis>
+  </asset>
+  <library_cameras>
+    <camera id="S3D-RENDER_CAM_NODE-camera" name="S3D-RENDER_CAM_NODE" >
+      <optics>
+        <technique_common>
+          <perspective>
+            <xfov sid="xfov">121.28449</xfov>
+            <aspect_ratio>1.7777778</aspect_ratio>
+            <znear sid="znear">0</znear>
+            <zfar sid="zfar">1</zfar>
+          </perspective>
+        </technique_common>
+      </optics>
+    </camera>
+    <camera id="S3D-ANIM_CAM_NODE-camera" name="S3D-ANIM_CAM_NODE" >
+      <optics>
+        <technique_common>
+          <perspective>
+            <xfov sid="xfov">121.28449</xfov>
+            <aspect_ratio>1.7777778</aspect_ratio>
+            <znear sid="znear">0</znear>
+            <zfar sid="zfar">1</zfar>
+          </perspective>
+        </technique_common>
+      </optics>
+    </camera>
+  </library_cameras>
+  <library_images>
+  </library_images>
+  <library_effects>
+    <effect id="lambertian-fx" name="lambertian">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">1   1   1   1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">1   1   1   1</color>
+            </diffuse>
+            <shininess>
+              <float sid="shininess">1</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">1   1   1   1</color>
+            </reflective>
+            <transparent>
+              <color sid="transparent">1   1   1   1</color>
+            </transparent>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1.2</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="lambertian_1-fx" name="lambertian">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">1   1   1   1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">1   1   1   1</color>
+            </diffuse>
+            <shininess>
+              <float sid="shininess">1</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">1   1   1   1</color>
+            </reflective>
+            <transparent>
+              <color sid="transparent">1   1   1   1</color>
+            </transparent>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1.2</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="lambertian_2-fx" name="lambertian">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">1   1   1   1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">1   1   1   1</color>
+            </diffuse>
+            <shininess>
+              <float sid="shininess">1</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">1   1   1   1</color>
+            </reflective>
+            <transparent>
+              <color sid="transparent">1   1   1   1</color>
+            </transparent>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1.2</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="lambertian_3-fx" name="lambertian">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">1   1   1   1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">1   1   1   1</color>
+            </diffuse>
+            <shininess>
+              <float sid="shininess">1</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">1   1   1   1</color>
+            </reflective>
+            <transparent>
+              <color sid="transparent">1   1   1   1</color>
+            </transparent>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1.2</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="lambertian_4-fx" name="lambertian">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">1   1   1   1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">1   1   1   1</color>
+            </diffuse>
+            <shininess>
+              <float sid="shininess">1</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">1   1   1   1</color>
+            </reflective>
+            <transparent>
+              <color sid="transparent">1   1   1   1</color>
+            </transparent>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1.2</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="lambertian_5-fx" name="lambertian">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">1   1   1   1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">1   1   1   1</color>
+            </diffuse>
+            <shininess>
+              <float sid="shininess">1</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">1   1   1   1</color>
+            </reflective>
+            <transparent>
+              <color sid="transparent">1   1   1   1</color>
+            </transparent>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1.2</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="lambertian" name="lambertian">
+      <instance_effect url="#lambertian-fx"/>
+    </material>
+    <material id="lambertian_1" name="lambertian">
+      <instance_effect url="#lambertian_1-fx"/>
+    </material>
+    <material id="lambertian_2" name="lambertian">
+      <instance_effect url="#lambertian_2-fx"/>
+    </material>
+    <material id="lambertian_3" name="lambertian">
+      <instance_effect url="#lambertian_3-fx"/>
+    </material>
+    <material id="lambertian_4" name="lambertian">
+      <instance_effect url="#lambertian_4-fx"/>
+    </material>
+    <material id="lambertian_5" name="lambertian">
+      <instance_effect url="#lambertian_5-fx"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="car-S3D-13_1" name="car-S3D-13" >
+      <mesh>
+        <source id="car-S3D-13_1-positions" name="car-S3D-13_1-positions">
+          <float_array id="car-S3D-13_1-positions-array" count="252"> -0.375 -0.3125549 -1.8257194 0.37324113 -0.28853643 -1.8268299 -0.16666667 0.067098856 -1.6207672 0.16666667 0.045091629 -1.5748571 0.375 -0.25040111 -0.03901583 0.33426517 0.11806341 0.21596456 -0.375 -0.23087433 -0.03901583 -0.35335749 0.1178233 0.14071226 -0.27777779 -0.18538769 -0.85084409 0.27660519 -0.19089071 -0.85158461 0 -0.081076376 -2.1876893 0 -0.18317845 0.14696401 0.30986166 -0.36222279 -1.8962206 -0.3125 -0.31235856 -1.8945546 -0.33333334 -0.26435339 0.020874819 0.33333334 -0.26387319 0.020874819 -0.0011725955 -0.31655931 -1.6292334 0.375 -0.4478682 -1.6560633 -0.375 -0.41690579 -1.6560633 0.25 -0.4970856 -2.0154071 -0.25 -0.4838104 -2.0154071 0 0.5 -0.35641247 0.1875 0.060269248 -2.4067366 0.4375 0.012949288 -2.2190683 0.5 0.1323062 -0.4063561 0.4375 0.022678792 0.32032806 -0.1875 0.094747171 0.5 -0.4375 0.0044513494 0.32032806 -0.5 0.14981332 -0.4063561 -0.4375 0.046359599 -2.2190683 0 0.10630271 -1.5723459 -0.3767364 0.41809046 -0.87731445 0.3486011 0.40924686 -0.87731445 0 0.11766507 0.29279181 0 -0.21808553 -0.84753954 0.1875 -0.3391462 -0.30852374 -0.5 0.16881505 -1.5003805 0.5 0.13409534 -1.5003805 -0.28125 -0.21631151 -2.3378296 0.28125 -0.20547092 -2.3378296 0.18618083 -0.27564958 -1.2820441 -0.1875 0.068458155 -2.4067366 0.3125 -0.27128041 0.29204968 -0.3125 -0.29743165 0.28425512 -0.1875 -0.32053924 -0.30852374 0.1875 0.10377085 0.5 0.46743083 -0.55418819 -1.9558138 0.49868083 -0.17517805 -1.7392204 -0.46875 -0.60207748 -1.9549809 -0.5 -0.10913102 -1.7383873 -0.4375 -0.50023973 -0.30852374 -0.4375 -0.54533678 0.050820142 -0.5 -0.24236551 -0.1288518 -0.3125 -0.53695047 0.050820142 0.4375 -0.5205062 -0.30852374 0.4375 -0.52986866 0.050820142 0.3125 -0.53952974 0.050820142 0.5 -0.24274506 -0.1288518 0.27993083 -0.60624075 -1.686306 -0.28125 -0.61931616 -1.685473 0 -0.29221797 -2.0154071 -0.1875 -0.24301288 -1.2812111 0.43354249 -0.59504539 -1.7018733 0.43354249 -0.25068685 -1.4323653 0.30854249 -0.44590271 -1.5222014 0.49604249 -0.42734069 -1.7917092 -0.4375 -0.58015233 -1.6993743 -0.4375 -0.25211769 -1.5522912 -0.5 -0.35063314 -1.7892103 -0.3125 -0.39376184 -1.5197024 0.15625 -0.33126003 -2.1501613 0.34375 -0.60953927 -1.8806531 0.15625 -0.39625943 -1.8806531 0.34375 -0.43295276 -2.1501613 -0.34375 -0.62578791 -1.8806531 -0.15625 -0.31594312 -2.1501613 -0.15625 -0.3906827 -1.8806531 -0.34375 -0.45561096 -2.1501613 -0.1875 0.5 -0.36079103 0.1875 0.5 -1.1927149 -0.1875 0.5 -1.1769919 0.1875 0.5 -0.39074311 0.09375 0.23379776 -0.028946042 -0.09375 0.25467658 -0.051353335 </float_array>
+          <technique_common>
+            <accessor count="84" offset="0" source="#car-S3D-13_1-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="car-S3D-13_1-vertices">
+          <input semantic="POSITION" source="#car-S3D-13_1-positions" />
+        </vertices>
+        <polylist count="164" material="defaultMaterial">
+          <input offset="0" semantic="VERTEX" source="#car-S3D-13_1-vertices" />
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>39 23 22 23 3 22 57 25 24 25 5 24 43 27 26 27 7 26 28 7 27 52 28 27 3 30 22 41 30 2 36 31 28 31 7 28 5 32 24 37 32 3 7 33 26 45 33 5 44 35 34 35 9 34 2 36 29 31 36 2 8 36 28 49 36 8 32 37 24 37 3 23 47 37 23 37 9 24 41 38 10 0 38 29 10 39 22 23 39 1 9 40 34 61 40 16 30 41 22 41 2 29 38 41 29 41 10 22 45 42 11 4 42 25 11 43 26 27 43 6 35 44 11 8 44 34 33 45 26 45 5 25 42 45 25 45 11 26 37 47 9 1 47 23 36 49 29 49 0 29 53 50 14 8 50 44 53 51 43 51 14 50 52 51 50 51 6 43 8 52 50 28 52 8 6 52 27 51 52 6 11 53 43 53 11 44 50 53 44 51 53 14 56 54 35 54 9 35 15 55 54 56 55 15 4 55 42 57 55 4 55 56 42 54 56 15 11 56 35 56 11 42 9 57 24 57 9 54 55 57 54 25 57 4 61 8 34 40 61 34 64 62 58 65 62 17 12 62 46 62 12 58 65 63 47 64 63 17 9 63 40 63 9 47 63 64 40 62 64 17 16 64 58 64 16 40 1 65 47 65 1 46 62 65 46 63 65 17 68 66 48 69 66 18 13 66 59 66 13 48 69 67 61 68 67 18 8 67 49 67 8 61 67 68 49 66 68 18 0 68 48 68 0 49 16 69 61 69 16 59 66 69 59 67 69 18 72 70 60 73 70 19 10 70 39 70 10 60 73 71 46 72 71 19 12 71 58 71 12 46 71 72 58 70 72 19 16 72 60 72 16 58 1 73 46 73 1 39 70 73 39 71 73 19 76 74 59 77 74 20 13 74 48 74 13 59 77 75 38 76 75 20 10 75 60 75 10 38 75 76 60 74 76 20 16 76 59 76 16 60 0 77 38 77 0 48 74 77 48 75 77 20 80 78 31 82 21 81 78 7 31 81 79 32 80 79 21 3 79 30 79 3 32 79 80 30 78 80 21 2 80 31 80 2 30 5 81 32 79 81 21 21 83 78 82 81 5 33 82 5 78 83 7 83 21 82 33 83 82 83 33 7 </p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Cube-S3D-15-FLIPPED_1" name="Cube-S3D-15-FLIPPED" >
+      <mesh>
+        <source id="Cube-S3D-15-FLIPPED_1-positions" name="Cube-S3D-15-FLIPPED_1-positions">
+          <float_array id="Cube-S3D-15-FLIPPED_1-positions-array" count="24"> -0.5 -0.5 -0.5 0.16344857 -0.5 -0.5 -0.5 0.18431765 -0.5 0.16344857 0.18431765 -0.5 0.20838711 -0.5 0.29825836 0.20838711 0.14730883 0.29825836 -0.5 -0.5 0.25523394 -0.5 0.14730883 0.25523394 </float_array>
+          <technique_common>
+            <accessor count="8" offset="0" source="#Cube-S3D-15-FLIPPED_1-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube-S3D-15-FLIPPED_1-vertices">
+          <input semantic="POSITION" source="#Cube-S3D-15-FLIPPED_1-positions" />
+        </vertices>
+        <polylist count="12" material="defaultMaterial">
+          <input offset="0" semantic="VERTEX" source="#Cube-S3D-15-FLIPPED_1-vertices" />
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>2 0 1 3 2 1 3 1 4 5 3 4 5 4 6 7 5 6 7 6 0 2 7 0 7 2 3 5 7 3 0 6 4 1 0 4 </p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Cube-S3D-16-FLIPPED_1" name="Cube-S3D-16-FLIPPED" >
+      <mesh>
+        <source id="Cube-S3D-16-FLIPPED_1-positions" name="Cube-S3D-16-FLIPPED_1-positions">
+          <float_array id="Cube-S3D-16-FLIPPED_1-positions-array" count="24"> -0.5 -0.5 -0.5 0.73238182 -0.5 -0.5 -0.5 -0.25692922 -0.5 0.73238182 -0.26776928 -0.5 0.69860792 -0.5 0.75728929 0.69860792 -0.26776928 0.75728929 -0.49023592 -0.5 0.75237954 -0.49023592 -0.25692922 0.75237954 </float_array>
+          <technique_common>
+            <accessor count="8" offset="0" source="#Cube-S3D-16-FLIPPED_1-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube-S3D-16-FLIPPED_1-vertices">
+          <input semantic="POSITION" source="#Cube-S3D-16-FLIPPED_1-positions" />
+        </vertices>
+        <polylist count="12" material="defaultMaterial">
+          <input offset="0" semantic="VERTEX" source="#Cube-S3D-16-FLIPPED_1-vertices" />
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>2 0 1 3 2 1 3 1 4 5 3 4 5 4 6 7 5 6 7 6 0 2 7 0 7 2 3 5 7 3 0 6 4 1 0 4 </p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Cube-S3D-19-FLIPPED_1" name="Cube-S3D-19-FLIPPED" >
+      <mesh>
+        <source id="Cube-S3D-19-FLIPPED_1-positions" name="Cube-S3D-19-FLIPPED_1-positions">
+          <float_array id="Cube-S3D-19-FLIPPED_1-positions-array" count="114"> -0.16666667 -0.44001162 -0.5 -0.41666669 -0.41001743 -0.48592985 -0.36666667 -0.47600466 -0.46391305 0 -0.42771414 -0.4830316 0.29166669 -0.46263945 -0.47878951 0 -0.4101232 -0.5 -0.29166669 -0.35765979 -0.48241231 0.16666667 -0.38044631 -0.5 0 -0.3355608 -0.48592985 0.41666669 -0.41054624 -0.4830316 0.36666667 -0.34496096 -0.46159449 0.42731088 -0.44043469 -0.43212643 0.41666669 -0.48510867 -0.41515806 0.36666667 -0.47617388 -0.33942208 0.427917 -0.41065204 -0.39818966 0.42484134 -0.38086936 -0.36425292 0.41666669 -0.33608961 -0.38411951 0.41666669 -0.41065204 -0.316246 0.29166669 -0.35840017 -0.32483542 0.16666667 -0.44043469 -0.30797231 0 -0.44433373 -0.3278389 -0.29166669 -0.46263945 -0.34150025 0 -0.41054624 -0.31376877 -0.16666667 -0.38044631 -0.31956524 0 -0.33566657 -0.33073717 -0.41666669 -0.4101232 -0.3423301 -0.36666667 -0.34419948 -0.36260793 -0.42551041 -0.44001162 -0.38743877 -0.3952229 -0.48500291 -0.39861068 -0.43609482 -0.41001743 -0.41557908 -0.41866183 -0.38002324 -0.44371939 -0.41666669 -0.33513772 -0.42964923 -0.16666667 -0.32045794 -0.44371939 0 -0.32066947 -0.41268083 0.16666667 -0.32088098 -0.37584582 -0.16666667 -0.5 -0.37584582 0 -0.44552571 -0.40108788 0.16666667 -0.5 -0.43212643 </float_array>
+          <technique_common>
+            <accessor count="38" offset="0" source="#Cube-S3D-19-FLIPPED_1-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube-S3D-19-FLIPPED_1-vertices">
+          <input semantic="POSITION" source="#Cube-S3D-19-FLIPPED_1-positions" />
+        </vertices>
+        <polylist count="36" material="defaultMaterial">
+          <input offset="0" semantic="VERTEX" source="#Cube-S3D-19-FLIPPED_1-vertices" />
+          <vcount>4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 </vcount>
+          <p>3 0 1 2 5 0 3 4 1 0 5 6 5 7 8 6 9 7 5 4 8 7 9 10 12 11 9 4 14 11 12 13 9 11 14 10 14 15 16 10 17 15 14 13 16 15 17 18 20 19 17 13 22 19 20 21 17 19 22 18 22 23 24 18 25 23 22 21 24 23 25 26 28 27 25 21 29 27 28 2 25 27 29 26 29 30 31 26 1 30 29 2 31 30 1 6 8 32 31 6 33 32 8 10 31 32 33 26 33 34 24 26 16 34 33 10 24 34 16 18 20 35 28 21 36 35 20 13 28 35 36 2 36 37 3 2 12 37 36 13 3 37 12 4 </p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Cube-S3D-20-FLIPPED_1" name="Cube-S3D-20-FLIPPED" >
+      <mesh>
+        <source id="Cube-S3D-20-FLIPPED_1-positions" name="Cube-S3D-20-FLIPPED_1-positions">
+          <float_array id="Cube-S3D-20-FLIPPED_1-positions-array" count="114"> -0.1301517 -0.40532801 0.14676213 -0.35360444 -0.35790831 0.17426211 -0.30610314 -0.46206427 0.21566685 0.021159053 -0.36700967 0.17716688 0.28854752 -0.44082999 0.18694665 0.023234777 -0.33057618 0.14821452 -0.23664834 -0.27504939 0.18277103 0.18077271 -0.31065598 0.14966691 0.0350511 -0.23956829 0.17789307 0.40981457 -0.35799199 0.18079785 0.37511984 -0.25371891 0.22147639 0.48339424 -0.40532801 0.26838112 0.40341404 -0.46155044 0.29660729 0.36017466 -0.46206427 0.42993337 0.48754567 -0.35790831 0.32628584 0.4916971 -0.31032124 0.38419056 0.42370659 -0.23914987 0.3552382 0.41540372 -0.35757357 0.47104764 0.31186116 -0.27446359 0.46380955 0.27971995 -0.41113269 0.5 0.04080195 -0.40204313 0.47032145 -0.21205428 -0.44062078 0.46290183 0.032200664 -0.34916699 0.5 -0.0025109351 -0.29480678 0.5 0.054693997 -0.23881513 0.47104764 -0.31990778 -0.35748988 0.47032145 -0.27748522 -0.25311637 0.42935243 -0.40466574 -0.40499327 0.38128579 -0.33603722 -0.47624832 0.35160723 -0.41169262 -0.35757357 0.32192868 -0.4187195 -0.31032124 0.26257157 -0.33747494 -0.23923355 0.29297632 -0.10779508 -0.21564925 0.26547635 0.051180564 -0.21548188 0.32555965 0.20312934 -0.21531451 0.38419056 -0.0077369809 -0.41306448 0.38128579 0.06951014 -0.39231497 0.32265487 0.17246981 -0.43207893 0.26547635 </float_array>
+          <technique_common>
+            <accessor count="38" offset="0" source="#Cube-S3D-20-FLIPPED_1-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube-S3D-20-FLIPPED_1-vertices">
+          <input semantic="POSITION" source="#Cube-S3D-20-FLIPPED_1-positions" />
+        </vertices>
+        <polylist count="36" material="defaultMaterial">
+          <input offset="0" semantic="VERTEX" source="#Cube-S3D-20-FLIPPED_1-vertices" />
+          <vcount>4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 </vcount>
+          <p>3 0 1 2 5 0 3 4 1 0 5 6 5 7 8 6 9 7 5 4 8 7 9 10 12 11 9 4 14 11 12 13 9 11 14 10 14 15 16 10 17 15 14 13 16 15 17 18 20 19 17 13 22 19 20 21 17 19 22 18 22 23 24 18 25 23 22 21 24 23 25 26 28 27 25 21 29 27 28 2 25 27 29 26 29 30 31 26 1 30 29 2 31 30 1 6 8 32 31 6 33 32 8 10 31 32 33 26 33 34 24 26 16 34 33 10 24 34 16 18 20 35 28 21 36 35 20 13 28 35 36 2 36 37 3 2 12 37 36 13 3 37 12 4 </p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Cube-S3D-21-FLIPPED_1" name="Cube-S3D-21-FLIPPED" >
+      <mesh>
+        <source id="Cube-S3D-21-FLIPPED_1-positions" name="Cube-S3D-21-FLIPPED_1-positions">
+          <float_array id="Cube-S3D-21-FLIPPED_1-positions-array" count="24"> 0.39946228 -0.44361058 -0.5 0.5 -0.44361058 -0.5 0.40046424 -0.38959289 -0.5 0.5 -0.38295406 -0.5 0.5 -0.5 0.5 0.5 -0.42544949 0.5 0.39946228 -0.5 0.5 0.40046424 -0.43208832 0.5 </float_array>
+          <technique_common>
+            <accessor count="8" offset="0" source="#Cube-S3D-21-FLIPPED_1-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube-S3D-21-FLIPPED_1-vertices">
+          <input semantic="POSITION" source="#Cube-S3D-21-FLIPPED_1-positions" />
+        </vertices>
+        <polylist count="12" material="defaultMaterial">
+          <input offset="0" semantic="VERTEX" source="#Cube-S3D-21-FLIPPED_1-vertices" />
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>2 0 1 3 2 1 3 1 4 5 3 4 5 4 6 7 5 6 7 6 0 2 7 0 7 2 3 5 7 3 0 6 4 1 0 4 </p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="node" name="">
+      <node id="car-S3D-13" name="car-S3D-13" type="NODE">
+        <matrix sid="matrix">1 0 0 0 0 1 0 0.27519727 0 0 1 -0.17961466 0 0 0 1</matrix>
+        <instance_geometry url="#car-S3D-13_1">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="defaultMaterial" target="#lambertian">
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="Cube-S3D-15-FLIPPED" name="Cube-S3D-15-FLIPPED" type="NODE">
+        <matrix sid="matrix">1 0 0 0.18559188 0 1 0 0.63172102 0 0 1 1.0404046 0 0 0 1</matrix>
+        <instance_geometry url="#Cube-S3D-15-FLIPPED_1">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="defaultMaterial" target="#lambertian_1">
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="Cube-S3D-16-FLIPPED" name="Cube-S3D-16-FLIPPED" type="NODE">
+        <matrix sid="matrix">1 0 0 -0.086008132 0 1 0 0.40767962 0 0 1 0.99207497 0 0 0 1</matrix>
+        <instance_geometry url="#Cube-S3D-16-FLIPPED_1">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="defaultMaterial" target="#lambertian_2">
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="Cube-S3D-19-FLIPPED" name="Cube-S3D-19-FLIPPED" type="NODE">
+        <matrix sid="matrix">1 0 0 0.051162273 0 1 0 0.23474783 0 0 1 1.103987 0 0 0 1</matrix>
+        <instance_geometry url="#Cube-S3D-19-FLIPPED_1">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="defaultMaterial" target="#lambertian_3">
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="Cube-S3D-20-FLIPPED" name="Cube-S3D-20-FLIPPED" type="NODE">
+        <matrix sid="matrix">1 0 0 0 0 1 0 0.15503824 0 0 1 1.1603526 0 0 0 1</matrix>
+        <instance_geometry url="#Cube-S3D-20-FLIPPED_1">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="defaultMaterial" target="#lambertian_4">
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="Cube-S3D-21-FLIPPED" name="Cube-S3D-21-FLIPPED" type="NODE">
+        <matrix sid="matrix">1 0 0 -0.46881247 0 1 0 0.52124685 0 0 1 0.32364285 0 0 0 1</matrix>
+        <instance_geometry url="#Cube-S3D-21-FLIPPED_1">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="defaultMaterial" target="#lambertian_5">
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="S3D-ANIM_CAM_NODE" name="S3D-ANIM_CAM_NODE" type="NODE">
+        <matrix sid="matrix">0.70710677 -0.50000006 0.5 2.5 0 0.70710677 0.70710683 3.5355344 -0.70710683 -0.5 0.49999997 2.4999998 0 0 0 1</matrix>
+        <instance_camera url="#S3D-ANIM_CAM_NODE-camera"/>
+      </node>
+      <node id="S3D-RENDER_CAM_NODE" name="S3D-RENDER_CAM_NODE" type="NODE">
+        <matrix sid="matrix">0.70710677 -0.50000006 0.5 2.5 0 0.70710677 0.70710683 3.5355344 -0.70710683 -0.5 0.49999997 2.4999998 0 0 0 1</matrix>
+        <instance_camera url="#S3D-RENDER_CAM_NODE-camera"/>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <library_animations>
+  </library_animations>
+  <scene>
+    <instance_visual_scene url="#node" />
+  </scene>
+</COLLADA>
