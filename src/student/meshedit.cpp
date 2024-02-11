@@ -727,19 +727,19 @@ void Halfedge_Mesh::catmullclark_subdivide_positions() {
 	}
     // Vertices
     for (auto v = vertices_begin(); v != vertices_end(); v++) {
-		auto he = v->halfedge();
-		float N = v->degree();
-        float n = 1.0f / N;
-		Vec3 faceSum = Vec3(0, 0, 0);
-		Vec3 edgeSum = Vec3(0, 0, 0);
-        do {
-			faceSum += he->face()->new_pos;
-			edgeSum += he->edge()->new_pos;
-			he = he->twin()->next();
-		} while (he != v->halfedge());
-        faceSum *= n;
-        edgeSum *= n;
-		v->new_pos = (faceSum + 2 * edgeSum + (N - 3) * v->pos) * n;
+		    auto he = v->halfedge();
+		    float N = v->degree();
+            float n = 1.0f / N;
+		    Vec3 faceSum = Vec3(0, 0, 0);
+		    Vec3 edgeSum = Vec3(0, 0, 0);
+            do {
+			    faceSum += he->face()->new_pos;
+			    edgeSum += he->edge()->center();
+			    he = he->twin()->next();
+		    } while (he != v->halfedge());
+            faceSum *= n;
+            edgeSum *= n;
+		    v->new_pos = (faceSum + 2 * edgeSum + (N - 3) * v->pos) * n;
     }
 }
 
@@ -835,11 +835,14 @@ struct Edge_Record {
         //    Edge_Record::optimal.
         // -> Also store the cost associated with collapsing this edge in
         //    Edge_Record::cost.
-        auto blah = e->halfedge()->vertex();
-        Mat4 quad1 = vertex_quadrics[blah];
+        Mat4 quad1 = vertex_quadrics[e->halfedge()->vertex()];
         Mat4 quad2 = vertex_quadrics[e->halfedge()->twin()->vertex()];
         Mat4 Q = quad1 + quad2;
-        Vec3 b = -Vec3(Q[3][0], Q[3][1], Q[3][2]);
+        Vec3 b = -Vec3(Q[0][3], Q[1][3], Q[2][3]);
+        Q[0][3] = 0;
+        Q[1][3] = 0;
+        Q[2][3] = 0;
+
         optimal = Q.inverse() * b;
         // cost is optimal transpose * Q * optimal
         cost = dot(optimal, Q * optimal);
