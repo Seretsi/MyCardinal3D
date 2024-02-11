@@ -801,8 +801,9 @@ void Halfedge_Mesh::loop_subdivide() {
     	auto v4 = e->halfedge()->twin()->next()->twin()->vertex();
     	e->new_pos = (3.0f / 8.0f) * (v1->pos + v2->pos) + (1.0f / 8.0f) * (v3->pos + v4->pos);
     }*/
-    /*for (auto v = vertices_begin(); v != vertices_end(); v++) {
-		auto he = v->halfedge();
+    for (auto v = vertices_begin(); v != vertices_end(); v++) {
+        v->is_new = false;
+        /* auto he = v->halfedge();
 		float N = v->degree();
 		float u = 1.0f / N;
 		Vec3 sum = Vec3(0, 0, 0);
@@ -810,8 +811,8 @@ void Halfedge_Mesh::loop_subdivide() {
 			sum += he->vertex()->pos;
 			he = he->twin()->next();
 		} while(he != v->halfedge());
-		v->new_pos = (1.0f - N * u) * v->pos + u * sum;
-	}*/
+		v->new_pos = (1.0f - N * u) * v->pos + u * sum;*/
+	}
     auto e = edges_begin();
     for(size_t i = 0; i < edge_count; i++) {
         EdgeRef nextEdge = e;
@@ -819,7 +820,7 @@ void Halfedge_Mesh::loop_subdivide() {
 
         auto new_vert = split_edge(e).value();
         new_vert->is_new = true;
-        HalfedgeRef he = e->halfedge();
+        HalfedgeRef he = new_vert->halfedge();
         he->edge()->is_new = false;
         he = he->twin()->next();
         he->edge()->is_new = true;
@@ -829,7 +830,8 @@ void Halfedge_Mesh::loop_subdivide() {
         he->edge()->is_new = true;
         e = nextEdge;
     }
-    /*for (auto e = edges_begin(); e != edges_end(); e++) {
+    do_erase();
+    for (auto e = edges_begin(); e != edges_end(); e++) {
         if (e->is_new) {
 			auto v1 = e->halfedge()->vertex();
 			auto v2 = e->halfedge()->twin()->vertex();
@@ -837,7 +839,7 @@ void Halfedge_Mesh::loop_subdivide() {
 				flip_edge(e);
 			}
 		}
-	}*/
+	}
 }
 
 /*
