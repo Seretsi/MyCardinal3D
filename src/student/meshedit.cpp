@@ -366,7 +366,8 @@ std::optional<Halfedge_Mesh::VertexRef> Halfedge_Mesh::split_edge(Halfedge_Mesh:
     erase(oldFace);
     erase(oldFace2);
 
-
+    //do_erase();
+    //validate();
     return std::optional<Halfedge_Mesh::VertexRef>(midVert);
 }
 
@@ -792,7 +793,51 @@ void Halfedge_Mesh::loop_subdivide() {
 
     // Copy the updated vertex positions to the subdivided mesh.
 
+    size_t edge_count = edges.size();
+    /*for(auto e = local_edge_list.begin(); e != local_edge_list.end(); e++) {
+    	auto v1 = e->halfedge()->vertex();
+    	auto v2 = e->halfedge()->twin()->vertex();
+    	auto v3 = e->halfedge()->next()->twin()->vertex();
+    	auto v4 = e->halfedge()->twin()->next()->twin()->vertex();
+    	e->new_pos = (3.0f / 8.0f) * (v1->pos + v2->pos) + (1.0f / 8.0f) * (v3->pos + v4->pos);
+    }*/
+    /*for (auto v = vertices_begin(); v != vertices_end(); v++) {
+		auto he = v->halfedge();
+		float N = v->degree();
+		float u = 1.0f / N;
+		Vec3 sum = Vec3(0, 0, 0);
+        do {
+			sum += he->vertex()->pos;
+			he = he->twin()->next();
+		} while(he != v->halfedge());
+		v->new_pos = (1.0f - N * u) * v->pos + u * sum;
+	}*/
+    auto e = edges_begin();
+    for(size_t i = 0; i < edge_count; i++) {
+        EdgeRef nextEdge = e;
+        nextEdge++;
 
+        auto new_vert = split_edge(e).value();
+        new_vert->is_new = true;
+        HalfedgeRef he = e->halfedge();
+        he->edge()->is_new = false;
+        he = he->twin()->next();
+        he->edge()->is_new = true;
+        he = he->twin()->next();
+        he->edge()->is_new = false;
+        he = he->twin()->next();
+        he->edge()->is_new = true;
+        e = nextEdge;
+    }
+    /*for (auto e = edges_begin(); e != edges_end(); e++) {
+        if (e->is_new) {
+			auto v1 = e->halfedge()->vertex();
+			auto v2 = e->halfedge()->twin()->vertex();
+            if (v1->is_new != v2->is_new) {
+				flip_edge(e);
+			}
+		}
+	}*/
 }
 
 /*
