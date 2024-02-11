@@ -803,16 +803,19 @@ void Halfedge_Mesh::loop_subdivide() {
     }
     for (auto v = vertices_begin(); v != vertices_end(); v++) {
         v->is_new = false;
-        auto he = v->halfedge()->twin();
-		float N = v->degree();
-		float u = 1.0f / N;
-		Vec3 sum = Vec3(0, 0, 0);
+        float N = v->degree();
+        float u = N > 3 ? 3.0f / (8.0f * N) : 3.0f / 16.0f; // Adjust weights based on degree
+        Vec3 sum = Vec3(0, 0, 0);
+        auto he = v->halfedge();
         do {
-			sum += he->vertex()->pos;
-			he = he->next()->twin();
-        } while(he != v->halfedge()->twin());
-		v->new_pos = (1.0f - N * u) * v->pos + u * sum;
+            sum += he->vertex()->pos;
+            he = he->next()->twin();
+        } while(he != v->halfedge());
+
+        // Calculate the updated position of the original vertex
+        v->new_pos = (1.0f - N * u) * v->pos + u * sum;
 	}
+
     auto e = edges_begin();
     for(size_t i = 0; i < edge_count; i++) {
         EdgeRef nextEdge = e;
